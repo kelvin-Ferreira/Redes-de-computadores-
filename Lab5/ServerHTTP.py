@@ -8,6 +8,7 @@
 
 # importacao das bibliotecas
 import socket
+import os
 
 # definicao do host e da porta do servidor
 HOST = '' # ip do servidor (em branco)
@@ -36,16 +37,17 @@ while True:
     # imprime na tela o que o cliente enviou ao servidor
     print (request.decode('utf-8'))
     str = request.decode('utf-8').split()
+    caminho = os.path.dirname(os.path.abspath(__file__))
  
     if str[0] == 'GET':
         if str[1] == '/' or str[1] == '/index.html': 
-            resp = open("C:/Users/Kelvin Costa/Desktop/Rede de comp/Lab5/index.html","r")
+            resp = open(caminho + "/index.html","r")
             http_response = "HTTP/1.1 200 OK\r\n\r\n" + resp.read()
         else:
-            resp = open("C:/Users/Kelvin Costa/Desktop/Rede de comp/Lab5/Error404.html","r")
+            resp = open(caminho + "/Error404.html","r")
             http_response = "HTTP/1.1 404 Not Found\r\n\r\n" + resp.read()
     else:
-        resp = open("C:/Users/Kelvin Costa/Desktop/Rede de comp/Lab5/Error400.html","r")
+        resp = open(caminho + "/Error400.html","r")
         http_response = "HTTP/1.1 400 Bad Request\r\n\r\n" + resp.read()
 
     client_connection.send(http_response.encode('utf-8'))
