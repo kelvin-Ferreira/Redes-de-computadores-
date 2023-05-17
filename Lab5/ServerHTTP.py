@@ -40,12 +40,17 @@ while True:
     caminho = os.path.dirname(os.path.abspath(__file__))
  
     if str[0] == 'GET':
-        if str[1] == '/' or str[1] == '/index.html': 
+        if str[1] == '/' :
             resp = open(caminho + "/index.html","r")
             http_response = "HTTP/1.1 200 OK\r\n\r\n" + resp.read()
         else:
-            resp = open(caminho + "/Error404.html","r")
-            http_response = "HTTP/1.1 404 Not Found\r\n\r\n" + resp.read()
+
+            if os.path.isfile(caminho + str[1]) == True: 
+                resp = open(caminho + str[1],"r")
+                http_response = "HTTP/1.1 200 OK\r\n\r\n" + resp.read()
+            else:
+                resp = open(caminho + "/Error404.html","r")
+                http_response = "HTTP/1.1 404 Not Found\r\n\r\n" + resp.read()
     else:
         resp = open(caminho + "/Error400.html","r")
         http_response = "HTTP/1.1 400 Bad Request\r\n\r\n" + resp.read()
